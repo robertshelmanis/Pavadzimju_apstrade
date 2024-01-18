@@ -1,6 +1,12 @@
 import PyPDF2
-import os
 import pathlib
+import openpyxl
+from openpyxl import Workbook
+import selenium
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+import time
 
 adrese=pathlib.Path("Invoices")
 visi_faili=list(adrese.glob("*.pdf"))
@@ -36,7 +42,7 @@ for f in range(len(visi_faili)):
         pos2=text1.find("Pasūtījuma numurs")
         pvznumurs=text1[pos1+10:pos2].rstrip()
         pvznumurs=pvznumurs.replace(",",".")
-        pvznumurs=int(pvznumurs)
+        pvznumurs=str(pvznumurs)
 
         pos1=text1.find("Nordea Bank Fi")
         pos2=text1.find("HABALV22")
@@ -63,6 +69,7 @@ for f in range(len(visi_faili)):
         pvznumurs=text1[pos1+23:pos1+34].rstrip()
         pvznumurs=pvznumurs.replace(",",".")
         pvznumurs=str(pvznumurs)
+        pvznumurs=pvznumurs.replace(u'\xa0', u'')
 
         pos1=text1.find("Saņēmējs")
         kontanr=text1[pos1-22:pos1].rstrip()
@@ -70,4 +77,64 @@ for f in range(len(visi_faili)):
         kontanr=str(kontanr)
 
         saraksts.append(["Amber", kontanr, pvznumurs, bezpvn, pvn, kopa])
-        print(saraksts)
+print(saraksts)
+
+dl = openpyxl.Workbook()
+lapa = dl.active
+lapa['A1'].value="Firmas nosaukums"
+lapa['B1'].value="Konta numurs"
+lapa['C1'].value="Pavadzīmes numurs"
+lapa['D1'].value="Summa bez PVN"
+lapa['E1'].value="PVN"
+lapa['F1'].value="Summa ar PVN"
+
+for i in range(len(saraksts)):
+    lapa['A'+str(i+2)].value=saraksts[i][0]
+    lapa['B'+str(i+2)].value=saraksts[i][1]
+    lapa['C'+str(i+2)].value=saraksts[i][2]
+    lapa['D'+str(i+2)].value=saraksts[i][3]
+    lapa['E'+str(i+2)].value=saraksts[i][4]
+    lapa['F'+str(i+2)].value=saraksts[i][5]
+
+dl.save("Pilnie_dati.xlsx")
+dl.close()
+
+service = Service()
+option = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=option)
+
+url = "https://emn178.github.io/online-tools/crc16.html"
+driver.get(url)
+time.sleep(2)
+
+for line in saraksts:
+    find=driver.find_element(By. ID, "input")
+    find.clear()
+    find.send_keys(line[0])
+    find=driver.find_element(By. ID, "output")
+    line[0] = find.get_attribute("value")
+    find=driver.find_element(By. ID, "input")
+    find.clear()
+    find.send_keys(line[1])
+    find=driver.find_element(By. ID, "output")
+    line[1] = find.get_attribute("value")
+
+dl = openpyxl.Workbook()
+lapa = dl.active
+lapa['A1'].value="Firmas nosaukums"
+lapa['B1'].value="Konta numurs"
+lapa['C1'].value="Pavadzīmes numurs"
+lapa['D1'].value="Summa bez PVN"
+lapa['E1'].value="PVN"
+lapa['F1'].value="Summa ar PVN"
+
+for i in range(len(saraksts)):
+    lapa['A'+str(i+2)].value=saraksts[i][0]
+    lapa['B'+str(i+2)].value=saraksts[i][1]
+    lapa['C'+str(i+2)].value=saraksts[i][2]
+    lapa['D'+str(i+2)].value=saraksts[i][3]
+    lapa['E'+str(i+2)].value=saraksts[i][4]
+    lapa['F'+str(i+2)].value=saraksts[i][5]
+
+dl.save("Kodetie_dati.xlsx")
+dl.close()
