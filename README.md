@@ -17,4 +17,4 @@ Visas programmā izmantotās bibliotēkas nav iebūvētas, tāpēc ir nepiecieš
 - bibliotēka selenium tiek instalēta ar komandu- **pip install selenium**
 
 ## Programmatūras izmantošanas metodes
-
+Programmatūru var izmantot tirdzniecības nozares pārstāvji, lai nebūtu jāveic tik liels manuāls darbs ar pavadzīmēm, kas var aizņemt ļoti daudz laika, it īpaši, ja uzņēmums ir lielāks un ikdienas pavadzīmju skaits ir ļoti liels. Pavadzīmes PDF formātā var iegūt no lielākajiem preču ražotājiem un izplatītājiem, jo viņi paši pavadzīmes veido šādā veidā un ir iespējams tiem pieprasīt, lai saņemot preci tiktu izsniegtas ne tikai fiziskā formāta pavadzīmes, bet arī to PDF versija. Apstrādājot pavadzīmes PDF formātā var ļoti ātri veikt datu apstrādi lielam skaitam pavadzīmju, tādējādi iegūstot svarīgāko informāciju no tām. Tas ļauj ātrāk veikt nepieciešamās darbības ar pavadzīmēm, piemēram, konta numura izvilkšana, apmaksas summu un pavadzīmes numuru, kas ļauj veikt daudz ātrāku rēķinu apmaksu uzņēmumam.
