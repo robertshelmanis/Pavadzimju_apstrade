@@ -11,4 +11,10 @@ Projekta darba uzdevums ir atvieglot ikdienas ienākošo pavadzīmju apstrādi, 
 - smtplib, tiek izmantota, lai varētu pieslēgties e-pastam, izmantojot SMTP protokolu
 - ssl, tiek izmantota, lai varētu droši pieslēgties e-pastam
 
-## 
+Visas programmā izmantotās bibliotēkas nav iebūvētas, tāpēc ir nepieciešams uzinstalēt dažas no tām uz datora:
+- bibliotēka PyPDF2 tiek instalēta ar komandu- **pip install PyPDF2**
+- bibliotēka openpyxl tiek instalēta ar komandu- **pip install openpyxl**
+- bibliotēka selenium tiek instalēta ar komandu- **pip install selenium**
+
+## Programmatūras izmantošanas metodes
+
